@@ -133,7 +133,7 @@ Vous devriez voir le simulateur Duckiematrix, basé sur Unity, démarrer. L'écr
 
 À partir d'ici, vous pouvez cliquer n'importe où dans la fenêtre et appuyer sur la touche [ENTRÉE] pour l'activer. Vous pouvez ensuite déplacer le petit canard vers le Duckiebot à l'aide des touches « w », « a », « s » et « d », ou modifier l'angle de la caméra pour observer le Duckiebot avec la souris. Vous pouvez également passer à une vue de dessus en appuyant sur la touche « v », ce qui vous donnera une vue similaire à celle-ci :
 
-![duckiematrix_overhead](assets/images/duckiematrix-overhead.png)
+![duckiematrix_overhead](assets/images/duckiematrix-riding.png)
 
 
 
