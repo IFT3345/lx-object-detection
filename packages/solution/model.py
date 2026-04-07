@@ -22,7 +22,9 @@ class MLModel:
         self.session = ort.InferenceSession(
             str(MODEL_PATH),
             sess_options=sess_opts,
-            providers=["CUDAExecutionProvider", "CPUExecutionProvider"], 
+#            providers=["CUDAExecutionProvider", "CPUExecutionProvider"], 
+            providers=["CPUExecutionProvider"], 
+
         )
 
         inp = self.session.get_inputs()[0]
