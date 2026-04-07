@@ -46,17 +46,17 @@ class MLModel:
         for x1, y1, x2, y2, score, _ in detections:
 
             print(f"Detection: {x1}-{x2}, {y1}-{y2}, {score}")
-            # TODO we don't want to consider detections with confidence (score) below CONF_THRESHOLD (a value you should set in config.py)
 
+            # TODO : nous ne voulons pas prendre en compte les détections dont le score de confiance est inférieur à CONF_THRESHOLD (une valeur à définir dans config.py).
 
-            # TODO we want to stop if there is a duckie closer than STOP_DISTANCE away
-            # To calculate if the duckie is too close we need to convert the pixel coordinates to 
-            # world coordinates. To do so you can use the `self.ground_projector` object which has
-            # loaded the camera extrinsic calibration
-            # Specifically, if you want to project an object of type `pix = Pixel(x=u, y=v)` to a ground plane
-            # point, you can first convert it to a vector (`vec = self.ground_projector.camera.pixel2vector(pix)`) and
-            # then you can intersect that vector with the ground plane (`self.ground_projector.vector2ground(vec)`). 
-            # That will be the point on the ground plane corresponding to the input pixel. 
+            # TODO : nous voulons arrêter la détection si un canard se trouve à une distance inférieure à STOP_DISTANCE.
+            # Pour calculer si le canard est trop proche, nous devons convertir les coordonnées de pixels en
+            # coordonnées du monde. Pour ce faire, vous pouvez utiliser l'objet `self.ground_projector` qui a
+            # chargé le calibration extrinsèque de la caméra.
+            # Plus précisément, si vous souhaitez projeter un objet de type `pix = Pixel(x=u, y=v)` sur un point du plan du sol,
+            # vous pouvez d'abord le convertir en vecteur (`vec = self.ground_projector.camera.pixel2vector(pix)`) et
+            # ensuite, vous pouvez intersecter ce vecteur avec le plan du sol (`self.ground_projector.vector2ground(vec)`).
+            # Ce sera le point sur le plan du sol correspondant au pixel d'entrée.
 
         return stop
 

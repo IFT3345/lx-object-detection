@@ -2,126 +2,122 @@
 <img src="./assets/images/dtlogo.png" alt="Duckietown Logo" width="50%">
 </p>
 
-# **Learning Experience (LX): Object Detection**
+# Labo 6: Détection d'objets 
 
-# About these activities
-
-This learning experience will take you through the process of collecting data, automatically annotating it, 
-and using this to train a neural network to perform object detection using the robot's camera image. We will then use this trained model
-to ensure that we don't run over any duckie pedestrians in Duckietown. 
-We will use one of the most popular object detection neural networks, called [YOLO (v11)](https://docs.ultralytics.com/models/yolo11/).
-You will also have to integrate this trained model into a feedback controller so that we don't run over duckies. 
-For now, we will just stop whenever an object (duckie) is detected in the road. 
-
-This learning experience is provided by the Duckietown team and can be run on Duckiebots. Visit us at the 
-[Duckietown Website](https://www.duckietown.com) for more learning materials, documentation, and demos.
-
-For guided setup instructions, lecture content, and more related to this LX, 
-see [our Self-Driving Cars with Duckietown MOOC on EdX](https://learning.edx.org/course/course-v1:ETHx+DT-01x+1T2025/home).
-
-## Notes on Additional Accounts that you will require
-
-**NOTE 1**: This LX will require you to have a Google account (we will use [Google Colab](https://colab.research.google.com/) and this will
-require uploading data to your [Google Drive](https://drive.google.com/drive/)). 
-
-**NOTE 2**: You will also need an account for [Hugging Face](https://huggingface.co). You can click the `Sign Up` button on the top right to create an account. Feel free to join the `Duckietown` organization when you get the verification step!
-
-**NOTE 3**: In order to use the SAM3 model, you will have to request access by [filling out the request form](https://huggingface.co/facebook/sam3). This can take a few minutes for approval so if you do it now you will be approved by the time you get to the auto-labelling part. 
-
-# Instructions
-
-**(If not already done) Clone this repository**
-
-The recommended way to use this repository is to make a fork and then clone that fork. 
-
-This can be done through the GitHub web interface. However, you are also free to simply clone this repository and get started. 
-
-Example instructions to fork a repository and configure to pull from upstream can be found in the 
-[duckietown-lx repository README](https://github.com/duckietown/duckietown-lx/blob/mooc2022/README.md).
+Ce laboratoire vous guidera à travers le processus de collecte et d'annotation automatique des données,
+et leur utilisation pour entraîner un réseau neuronal à détecter les objets à partir de l'image de la caméra du robot. Nous utiliserons ensuite ce modèle entraîné
+pour éviter d'écraser les canards piétons à Duckietown.
+Nous utiliserons l'un des réseaux neuronaux de détection d'objets les plus populaires, appelé [YOLO (v11)](https://docs.ultralytics.com/models/yolo11/).
+Vous devrez également intégrer ce modèle entraîné à un contrôleur à retour d'information afin d'éviter d'écraser les canards.
+Pour l'instant, nous nous arrêterons simplement dès qu'un objet (un canard) sera détecté sur la route.
 
 
-## 1. Make sure your LX is up-to-date
+##  Mais d'abord...
 
-Update your exercise definition and instructions,
+Assurez-vous que votre système est à jour.
 
-    git remote add upstream git@github.com:duckietown/lx-object-detection
-    git pull upstream ente
-
-## 2. Make sure your system is up-to-date
-
-- 💻 This is an `ente` learning experience (note the branch name). Make sure your Duckietown Shell is set to an `ente` profile 
-- (and not, e.g., a `daffy` one). You can check your current distribution with
-
-    dts profile list
-
-  To switch to an ente profile, follow the [Duckietown Manual DTS installation instructions](https://docs.duckietown.com/ente/duckietown-manual/10-setup/02-software/duckietown-shell-dts-installation.html#dt-account-switch-profile).
-
-
-- 💻 Always make sure your Duckietown Shell is updated to the latest version. See [installation instructions](https://github.com/duckietown/duckietown-shell)
-
-- 💻 Update the shell commands: `dts update`
-
-- 💻 Update your laptop/desktop: `dts desktop update`
-
-- 🚙 Update your Duckiebot: `dts duckiebot update ROBOTNAME` (where `ROBOTNAME` is the name of your Duckiebot - real or virtual.)
-
-**Note**: if your virtual robot hangs indefinitely when you try to update it, you can try to restart it with:
-
-    dts duckiebot virtual restart ROBOTNAME
-
-
-## 3. Work on the exercise
-
-### Launch the code editor
-
-#### SSL certificate
-
-If you have not done so already, set up your local SSL certificate needed to run the learning experience editor with:
-
-    sudo apt install libnss3-tools
-    dts setup mkcert
-
-
-Open the code editor by running the following command,
+- 💻 Veillez toujours à ce que votre Duckietown Shell soit mise à jour vers la dernière version: 
 
 ```
-dts code editor
+     pipx upgrade duckietown-shell
 ```
 
-Wait for a URL to appear on the terminal, then click on it or copy-paste it in the address bar
-of your browser to access the code editor. The first thing you will see in the code editor is
-this same document, you can continue there.
-
-**NOTE**: if you are running Duckietown inside a devcontainer, make sure to [install the certificate for your host machine as well](https://docs.duckietown.com/ente/duckietown-manual/10-setup/setup-devcontainer.html#dts-code-run). 
-
-
-### Walkthrough of notebooks
-
-**NOTE**: You should be reading this from inside the code editor in your browser.
-
-Inside the code editor, use the navigator sidebar on the left-hand side to navigate to the
-`notebooks` directory and open the first notebook.
-
-Follow the instructions on the notebook and work through the notebooks in sequence.
-
-
-### Testing with the Duckiematrix
-
-To test your code in the Duckiematrix you will need a virtual robot. You can create one with the command:
+- 💻 Mettre à jour les commandes du shell: 
 
 ```
-dts duckiebot virtual create --type duckiebot --configuration DB21J VBOT
+     dts update
 ```
 
-where `VBOT` is the hostname. It can be anything you like, with [some constraints](https://docs.duckietown.com/ente/duckietown-manual/10-setup/03-duckiebot/flashing-sd-card-duckiebot-initialization-complete.html). Make sure to remember your robot (host)name for later.
-
-Then you can start your virtual robot with the command:
+- 💻 Assurez-vous que toutes les images Docker présentes sur votre ordinateur sont à jour: 
 
 ```
-dts duckiebot virtual start VBOT
+     dts desktop update
 ```
 
-You should see it with a status `Booting` and finally `Ready` if you look at `dts fleet discover`: 
+- 💻 Arrêtez et supprimez tous les conteneurs Docker existants (que l'autre groupe aurait pu laisser ouverts par erreur):
+
+
+```
+     docker stop $(docker ps -aq)
+     docker rm $(docker ps -aq)
+```     
+
+- 💻 Vous devrez peut-être également supprimer ce répertoire temporaire pour avoir les autorisations nécessaires pour y écrire.
+
+```
+     sudo rm -rf /tmp/duckiematrix
+```
+   
+- 🚙 Assurez-vous que toutes les images Docker présentes sur votre ordinateur sont à jour: 
+
+```
+    dts duckiebot update ROBOTNAME
+```
+
+(où ROBOTNAME est le nom de votre Duckiebot — réel ou virtuel. Assurez vous que ce dernier soit actif.)
+
+
+
+## Avant de commencer
+
+
+**REMARQUE 1** : Vous aurez également besoin d’un compte [Hugging Face](https://huggingface.co). Cliquez sur le bouton « Sign Up » en haut à droite pour créer un compte.
+
+**REMARQUE 2** : Pour utiliser le modèle SAM3, vous devrez demander l’accès en [remplissant le formulaire de demande](https://huggingface.co/facebook/sam3). L’approbation peut prendre quelques minutes ; si vous faites votre demande maintenant, elle sera approuvée avant même que vous passiez à l’étape de l’étiquetage automatique.
+
+
+
+
+# Comment réaliser cet exercice de laboratoire ?
+
+## Lancez l'éditeur de code.
+
+Ouvrez l'éditeur de code (VSCode) en exécutant la commande suivante:
+
+```
+dts code editor --gpus all
+```
+
+**REMARQUE** L'option `--gpus all` rendra votre GPU disponible dans l'éditeur VSCode.
+
+
+Attendez qu'une URL s'affiche dans le terminal, puis cliquez dessus ou copiez-la et collez-la dans la barre d'adresse de votre navigateur pour accéder à l'éditeur de code. Le premier élément que vous verrez dans l'éditeur de code est ce même document. 
+
+**Vous pouvez poursuivre votre travail à partir de là**
+
+
+## Les notebooks "Jupyter"
+
+**REMARQUE** : Vous devez lire ce message depuis l'éditeur de code de votre navigateur.
+
+Dans l'éditeur de code, utilisez la barre latérale de navigation située à gauche pour accéder au
+dossier `notebooks` et ouvrir le premier notebook.
+
+Suivez les instructions du notebook et parcourez les notebooks dans l'ordre.
+
+Une fois que vous avez terminé toutes les tâches des notebooks, vous pouvez suivre les instructions suivantes pour tester votre code.
+
+## Exécution de votre code
+
+### Tester avec la Duckiematrix
+
+Il peut être utile de tester votre code dans un environnement de simulation avant de l'essayer sur le robot réel. Pour cela, nous avons la Duckiematrix.
+
+Pour tester votre code dans Duckiematrix, vous aurez besoin d'un robot virtuel. Vous pouvez en créer un avec la commande suivante:
+
+```
+dts duckiebot virtual create [VBOT] -t duckiebot -c DB21J
+```
+
+où `[VBOT]` peut être n'importe quoi (mais n'oubliez pas ce nom pour la suite).
+
+Vous pouvez ensuite démarrer votre robot virtuel avec la commande:
+
+```
+dts duckiebot virtual start [VBOT] --pull
+```
+
+Vous devriez le voir avec le statut « Booting » (démarrage) et enfin « Ready » (prêt) si vous consultez la commande `dts fleet discover` :
 
 ```
      | Hardware |   Type    | Model |  Status  | Hostname 
@@ -129,74 +125,58 @@ You should see it with a status `Booting` and finally `Ready` if you look at `dt
 [VBOT] |  virtual | duckiebot | DB21J |  Ready   | [VBOT].local
 ```
 
-Now that your virtual robot is ready, you can start the Duckiematrix. From a terminal in this exercise directory that you 
-cloned do:
+Maintenant que votre robot virtuel est prêt, vous pouvez démarrer Duckiematrix. Depuis ce répertoire d'exercices, exécutez la commande suivante :
 
 ```
 dts code start_matrix
 ```
 
-You should see the Unity-based Duckiematrix simulator start up. The startup screen will look like:
+Vous devriez voir le simulateur Duckiematrix, basé sur Unity, démarrer. L'écran de démarrage ressemblera à ceci :
 
 ![duckiematrix_start](assets/images/duckiematrix-start.png)
 
-Your Duckiebot is at the start of a long straightaway with duckies crossing the road. 
+À partir d'ici, vous pouvez cliquer n'importe où dans la fenêtre et appuyer sur la touche [ENTRÉE] pour l'activer. Vous pouvez ensuite déplacer le petit canard vers le Duckiebot à l'aide des touches « w », « a », « s » et « d », ou modifier l'angle de la caméra pour observer le Duckiebot avec la souris. Vous pouvez également passer à une vue de dessus en appuyant sur la touche « v », ce qui vous donnera une vue similaire à celle-ci :
 
-From here you can click anywhere on the window and click [ENTER] to make it become active. 
-From here you can move the duckie towards the Duckiebot with the 'w', 'a', 's', and 'd' keys or you can move the 
-camera angle to view the Duckiebot with the mouse. If you are close enough to your Duckiebot, you can jump on with the 'E' key, 
-which should look like
-
-![duckiematrix_riding](assets/images/duckiematrix-riding.png)
-
-You can then you can drive the Duckiebot around with the 'w', 'a', 's', and 'd' keys (which will be useful later for data collection).
-
-If you get very lost from the road and you want to come back, you can do so with the 'R' key. 
+![duckiematrix_overhead](assets/images/duckiematrix-overhead.png)
 
 
-### Building your code
 
-You can build your code with 
+
+### "Build" votre code
+
+Vous pouvez build le code avec
 
 ```
-dts code build -R ROBOT_NAME [--local]
+dts code build -R ROBOTNAME
 ```
 
-This will build a docker image with your code compiled inside. 
+où ROBOTNAME peut être un robot réel ou virtuel.
 
+### Tester le code
 
-**Note**: For the time being if `ROBOT_NAME` is a **real** Duckiebot, you should build with the `--local` flag. This
-will cause the image to be built on your local machine rather than on the Duckiebot itself. 
-
-
-
-### 💻 Testing 
-
-
-To test your code by running:
+Vous pouvez ensuite exécuter votre code avec
 
 ```
-dts code workbench [-m] -R ROBOT_NAME [--local]
+dts code workbench -R ROBOTNAME [-m]
 ```
 
-You should include the `-m` if `ROBOT_NAME` is a virtual robot to indicate that you are running in the Duckiematrix.
-
-**Note**: For the time being, you should include the `--local` flag if `ROBOT_NAME` is a **real** Duckiebot. This
-will cause the code to be run on your laptop which is communicating with your Duckiebot. 
+où ROBOTNAME peut être un robot réel ou virtuel, mais s'il s'agit d'un robot virtuel, vous devez inclure l'option `-m` pour indiquer que vous souhaitez le tester dans la Duckiematrix.
 
 
-However, before you can test you will need to:
-
- - Collect data
- - Annotate that data (automatically)
- - Train your object detection model
- - Export your model
 
 
-To get started you can proceed to the [first notebook](./notebooks/01-CNN/cnn.ipynb).
+Cependant, avant de pouvoir effectuer des tests, vous devrez :
+
+- Collecter les données
+- Annoter ces données (automatiquement)
+- Entraîner votre modèle de détection d'objets
+- Exporter votre modèle
+
+
+Pour commencer, vous pouvez passer au [premier notebook qui est une introduction aux réseaux neuronaux et aux CNN](./notebooks/01-CNN/intro_to_nn.ipynb).
 
 ## Credits
 
-The previous (daffy) version of this LX was largely written by [Charlie Gauthier](https://velythyl.github.io/). 
+La version précédente (daffy) de ce LX a été en grande partie écrite par [Charlie Gauthier](https://velythyl.github.io/).
 
-This updated (ente) version was largely written by [Shima Shahfar](https://ca.linkedin.com/in/shima-shahfar).
+Cette version mise à jour (ente) a été en grande partie écrite par [Shima Shahfar](https://ca.linkedin.com/in/shima-shahfar).
