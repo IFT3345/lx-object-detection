@@ -6,10 +6,8 @@
 
 Ce laboratoire vous guidera à travers le processus de collecte et d'annotation automatique des données,
 et leur utilisation pour entraîner un réseau neuronal à détecter les objets à partir de l'image de la caméra du robot. Nous utiliserons ensuite ce modèle entraîné
-pour éviter d'écraser les canards piétons à Duckietown.
-Nous utiliserons l'un des réseaux neuronaux de détection d'objets les plus populaires, appelé [YOLO (v11)](https://docs.ultralytics.com/models/yolo11/).
-Vous devrez également intégrer ce modèle entraîné à un contrôleur à retour d'information afin d'éviter d'écraser les canards.
-Pour l'instant, nous nous arrêterons simplement dès qu'un objet (un canard) sera détecté sur la route.
+pour éviter d'entrer en collision avec des piétons (canards).
+Nous commencerons avec un des réseaux neuronaux de détection d'objets les plus populaires, appelé [YOLO (v11)](https://docs.ultralytics.com/models/yolo11/) et nous allons l'affiner..
 
 
 ##  Mais d'abord...
@@ -64,8 +62,6 @@ Assurez-vous que votre système est à jour.
 **REMARQUE 1** : Vous aurez également besoin d’un compte [Hugging Face](https://huggingface.co). Cliquez sur le bouton « Sign Up » en haut à droite pour créer un compte.
 
 **REMARQUE 2** : Pour utiliser le modèle SAM3, vous devrez demander l’accès en [remplissant le formulaire de demande](https://huggingface.co/facebook/sam3). L’approbation peut prendre quelques minutes ; si vous faites votre demande maintenant, elle sera approuvée avant même que vous passiez à l’étape de l’étiquetage automatique.
-
-
 
 
 # Comment réaliser cet exercice de laboratoire ?
@@ -125,7 +121,7 @@ Vous devriez le voir avec le statut « Booting » (démarrage) et enfin « Ready
 [VBOT] |  virtual | duckiebot | DB21J |  Ready   | [VBOT].local
 ```
 
-Maintenant que votre robot virtuel est prêt, vous pouvez démarrer Duckiematrix. Depuis ce répertoire d'exercices, exécutez la commande suivante :
+Maintenant que votre robot virtuel est prêt, vous pouvez démarrer le Duckiematrix. Depuis ce répertoire d'exercices, exécutez la commande suivante :
 
 ```
 dts code start_matrix
