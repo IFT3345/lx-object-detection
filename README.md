@@ -121,7 +121,7 @@ Vous devriez le voir avec le statut « Booting » (démarrage) et enfin « Ready
 [VBOT] |  virtual | duckiebot | DB21J |  Ready   | [VBOT].local
 ```
 
-Maintenant que votre robot virtuel est prêt, vous pouvez démarrer le Duckiematrix. Depuis ce répertoire d'exercices, exécutez la commande suivante :
+Maintenant que votre robot virtuel est prêt, vous pouvez démarrer la Duckiematrix. Depuis ce répertoire d'exercices, exécutez la commande suivante :
 
 ```
 dts code start_matrix
@@ -131,16 +131,16 @@ Vous devriez voir le simulateur Duckiematrix, basé sur Unity, démarrer. L'écr
 
 ![duckiematrix_start](assets/images/duckiematrix-start.png)
 
-À partir d'ici, vous pouvez cliquer n'importe où dans la fenêtre et appuyer sur la touche [ENTRÉE] pour l'activer. Vous pouvez ensuite déplacer le petit canard vers le Duckiebot à l'aide des touches « w », « a », « s » et « d », ou modifier l'angle de la caméra pour observer le Duckiebot avec la souris. Vous pouvez également passer à une vue de dessus en appuyant sur la touche « v », ce qui vous donnera une vue similaire à celle-ci :
+À partir d'ici, vous pouvez cliquer n'importe où dans la fenêtre et appuyer sur la touche [ENTRÉE] pour l'activer. Vous pouvez ensuite déplacer le petit canard vers le Duckiebot à l'aide des touches « w », « a », « s » et « d » (qui seront utiles pour la collection de données ultérieurement), modifier l'angle de la caméra pour observer le Duckiebot avec la souris et appuyer sur la touche « e » pour monter sur le véhicule, ce qui vous donnera une vue similaire à celle-ci : 
 
-![duckiematrix_overhead](assets/images/duckiematrix-riding.png)
+![duckiematrix_riding](assets/images/duckiematrix-riding.png)
+
+Vous pouvez également passer à une vue de dessus en appuyant sur la touche « v » et, si vous vous éloignez considérablement de la route, vous pouvez revenir au point de départ en appuyant sur la touche « r ».
 
 
+### Compiler votre code
 
-
-### "Build" votre code
-
-Vous pouvez build le code avec
+Vous pouvez compiler votre code avec
 
 ```
 dts code build -R ROBOTNAME
@@ -148,7 +148,7 @@ dts code build -R ROBOTNAME
 
 où ROBOTNAME peut être un robot réel ou virtuel.
 
-### Tester le code
+### Tester votre code
 
 Vous pouvez ensuite exécuter votre code avec
 
@@ -157,8 +157,6 @@ dts code workbench -R ROBOTNAME [-m]
 ```
 
 où ROBOTNAME peut être un robot réel ou virtuel, mais s'il s'agit d'un robot virtuel, vous devez inclure l'option `-m` pour indiquer que vous souhaitez le tester dans la Duckiematrix.
-
-
 
 
 Cependant, avant de pouvoir effectuer des tests, vous devrez :
